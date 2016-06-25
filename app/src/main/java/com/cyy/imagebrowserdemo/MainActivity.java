@@ -87,5 +87,6 @@ public class MainActivity extends AppCompatActivity {
         datas.addAll(tempArr);
         datas.addAll(tempArr);
         datas.addAll(tempArr);
+        datas.addAll(tempArr);
     }
 }
