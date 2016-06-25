@@ -26,4 +26,5 @@ dependencies {
     compile project(':yimagebrowser')
     compile 'com.android.support:cardview-v7:23.3.0'
     compile 'com.android.support:recyclerview-v7:23.3.0'
+    compile 'com.google.code.gson:gson:2.2.4'
 }

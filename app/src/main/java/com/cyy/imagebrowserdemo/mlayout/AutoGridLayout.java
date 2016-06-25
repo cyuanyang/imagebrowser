@@ -44,7 +44,7 @@ public class AutoGridLayout extends FrameLayout {
      * 设置显示几个
      * @param uriStr fff
      */
-    public void setHowMuchImageView(List<String> uriStr){
+    public void setHowMuchImageView(List<String> uriStr , boolean loadData){
         this.mUriStrList = uriStr;
         int num = uriStr.size();
         if (num > 9){
@@ -53,9 +53,11 @@ public class AutoGridLayout extends FrameLayout {
             showedNum = num;
         }
         requestLayout();
-        int size = uriStr.size();
-        for (int i = 0 ; i< size ; i++){
-            this.setDataForEveryItemView(itemViews[i] , uriStr.get(i));
+        if (loadData){
+            int size = uriStr.size();
+            for (int i = 0 ; i< size ; i++){
+                this.setDataForEveryItemView(itemViews[i] , uriStr.get(i));
+            }
         }
     }
 

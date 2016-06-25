@@ -1,6 +1,9 @@
 package com.cyy.imagebrowserdemo;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,9 +12,12 @@ import android.view.ViewGroup;
 
 import com.cyy.imagebrowserdemo.mlayout.AutoGridLayout;
 import com.cyy.imagebrowserdemo.mlayout.NormalGridLayout;
+import com.cyy.yimagebrowser.YImageBrowser;
+import com.cyy.yimagebrowser.YImageBrowserActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Created by cyy on 2016/6/23.
@@ -20,9 +26,11 @@ import java.util.List;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     protected Context context;
+    private List<List<String>> datas;
 
-    public MyAdapter( Context context){
+    public MyAdapter( Context context ,  List<List<String>> datas){
         this.context = context;
+        this.datas  = datas;
     }
 
     @Override
@@ -34,29 +42,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        List<String > uriStrs = new ArrayList<>();
-        if (position % 3 == 0){
-            for (int i = 0 ; i < 2 ; i++)uriStrs.add("http://img2.imgtn.bdimg.com/it/u=451523955,1115502761&fm=21&gp=0.jpg");
-        }
-        if (position % 3 == 1){
-            for (int i = 0 ; i < 1 ; i++)uriStrs.add("http://img2.imgtn.bdimg.com/it/u=451523955,1115502761&fm=21&gp=0.jpg");
-        }
-        if (position % 3 == 2){
-            for (int i = 0 ; i < 7 ; i++)uriStrs.add("http://img2.imgtn.bdimg.com/it/u=451523955,1115502761&fm=21&gp=0.jpg");
-        }
-        holder.layout.setHowMuchImageView(uriStrs);
+
+        final List<String> uriStrs = datas.get(position);
+        holder.layout.setHowMuchImageView(uriStrs,true);
         holder.layout.setItemClickListener(new AutoGridLayout.ItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Log.e("ddd" , "ddd");
+                YImageBrowser.newInstance().startBrowserImage((Activity) context , uriStrs , view , position);
             }
         });
-
     }
 
     @Override
     public int getItemCount() {
-        return 20;
+        return datas.size();
     }
 
     //holder
