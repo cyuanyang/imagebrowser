@@ -3,7 +3,6 @@ package com.cyy.imagebrowserdemo.mlayout;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -27,6 +26,8 @@ public class AutoGridLayout extends FrameLayout {
 
     private int imageWidth;
 
+    private ItemClickListener itemClickListener;
+
     public AutoGridLayout(Context context) {
         super(context);
     }
@@ -41,7 +42,7 @@ public class AutoGridLayout extends FrameLayout {
 
     /**
      * 设置显示几个
-     * @param uriStr
+     * @param uriStr fff
      */
     public void setHowMuchImageView(List<String> uriStr){
         this.mUriStrList = uriStr;
@@ -70,17 +71,18 @@ public class AutoGridLayout extends FrameLayout {
                     (100 , 100);
             this.addView(itemView , lp);
             this.itemViews[i] = itemView;
+            final int position = i;
+            itemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v ) {
+                    if (itemClickListener!=null)itemClickListener.onItemClick(v , position);
+                }
+            });
         }
     }
 
     public int getItemViewLayout(){
         return 0;
-    }
-
-    public int dp2px(Context context, float dpVal)
-    {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                dpVal, context.getResources().getDisplayMetrics());
     }
 
     @Override
@@ -91,25 +93,25 @@ public class AutoGridLayout extends FrameLayout {
 
         int childStatue = 0; ///自view的状态 暂时不知道啥作用 看设置0就行，我也不知道为啥，看源码就是这样干的
 
-        Log.e("---------", "size width = "+ WIDTH_SIZE + " ---- "+ dp2px(this.getContext() , 200));
-        imageWidth = (WIDTH_SIZE - MARGIN_IN_IMAGE*2) /3;
+        Log.e("---------", "size width = "+ WIDTH_SIZE );
+        imageWidth = calculateImageWidthByShowedNum(WIDTH_SIZE , showedNum);
         int childWidthMeasureSpec  = getChildMeasureSpec(widthMeasureSpec , 0 , imageWidth);
-        int childHeightMeasureSpec = getChildMeasureSpec(heightMeasureSpec , 0 , imageWidth);
+        int childHeightMeasureSpec = getChildMeasureSpec
+                (heightMeasureSpec , 0 , (int)(imageWidth * getHeightRatio(showedNum)));
 
         int count = this.getChildCount();
         for (int i = 0 ; i < count ; i++){
-
             if (i > showedNum - 1){
                 //不显示的要隐藏
                 getChildAt(i).setVisibility(GONE);
             }else {
                 ///测量每一个宽高
                 getChildAt(i).measure(childWidthMeasureSpec , childHeightMeasureSpec);
+                getChildAt(i).setVisibility(VISIBLE);
             }
         }
 
         int maxHeight = ((showedNum-1)/3 +1) * imageWidth + (showedNum-1)/3 * MARGIN_IN_IMAGE;
-
         setMeasuredDimension(resolveSizeAndState(imageWidth * 3 ,widthMeasureSpec , childStatue) ,
                 resolveSizeAndState(maxHeight ,heightMeasureSpec , childStatue));
     }
@@ -117,19 +119,43 @@ public class AutoGridLayout extends FrameLayout {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-
         int mLeft = imageWidth + MARGIN_IN_IMAGE;
         int mTop = imageWidth + MARGIN_IN_IMAGE;
-        int count = this.getChildCount();
-        for (int i = 0 ; i < count ; i++){
+        for (int i = 0 ; i < showedNum ; i++){
             int y = i / 3 ;
             int x = i % 3;
-            if (i > showedNum - 1){
-
-            }else {
-                getChildAt(i).layout(mLeft*x , mTop*y , mLeft*x + imageWidth , mTop*y + imageWidth);
-            }
-
+            getChildAt(i).layout(mLeft*x , mTop*y , mLeft*x + imageWidth , mTop*y + imageWidth);
         }
+    }
+
+    /**
+     * 得到每一个item view的宽高 子类可重写这个方法自动以不同的宽高
+     * @param maxWidth AutoGridLayout 的最大宽度
+     * @param willShowItemViewNum 将要显示的item view的数量
+     * @return item view的宽
+     */
+    public int calculateImageWidthByShowedNum(int maxWidth , int willShowItemViewNum ) {
+        if (willShowItemViewNum == 2){
+            return  (maxWidth - MARGIN_IN_IMAGE) /2;
+        }
+        if (willShowItemViewNum == 1){
+            return  maxWidth *2/3;
+        }
+        return  (maxWidth - MARGIN_IN_IMAGE*2) /3;
+    }
+
+    /**
+     * 宽高的百分比 子类可重写改变宽高比
+     * @return  宽高的百分比
+     */
+    public float getHeightRatio(int willShowItemViewNum){
+        return 1;
+    }
+
+    public void setItemClickListener(ItemClickListener l){
+        this.itemClickListener = l;
+    }
+    public interface ItemClickListener{
+        void onItemClick(View view ,int position);
     }
 }

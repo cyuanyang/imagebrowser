@@ -2,6 +2,7 @@ package com.cyy.imagebrowserdemo;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,8 +35,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         List<String > uriStrs = new ArrayList<>();
-        for (int i = 0 ; i < 7 ; i++)uriStrs.add("http://img2.imgtn.bdimg.com/it/u=451523955,1115502761&fm=21&gp=0.jpg");
+        if (position % 3 == 0){
+            for (int i = 0 ; i < 2 ; i++)uriStrs.add("http://img2.imgtn.bdimg.com/it/u=451523955,1115502761&fm=21&gp=0.jpg");
+        }
+        if (position % 3 == 1){
+            for (int i = 0 ; i < 1 ; i++)uriStrs.add("http://img2.imgtn.bdimg.com/it/u=451523955,1115502761&fm=21&gp=0.jpg");
+        }
+        if (position % 3 == 2){
+            for (int i = 0 ; i < 7 ; i++)uriStrs.add("http://img2.imgtn.bdimg.com/it/u=451523955,1115502761&fm=21&gp=0.jpg");
+        }
         holder.layout.setHowMuchImageView(uriStrs);
+        holder.layout.setItemClickListener(new AutoGridLayout.ItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Log.e("ddd" , "ddd");
+            }
+        });
+
     }
 
     @Override
