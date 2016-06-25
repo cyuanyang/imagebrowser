@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/imagebrowser.iml" filepath="$PROJECT_DIR$/imagebrowser.iml" />
       <module fileurl="file://$PROJECT_DIR$/imagebrowserdemo.iml" filepath="$PROJECT_DIR$/imagebrowserdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/yimagebrowser/yimagebrowser.iml" filepath="$PROJECT_DIR$/yimagebrowser/yimagebrowser.iml" />
     </modules>
