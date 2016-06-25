@@ -11,7 +11,8 @@
         fresco:placeholderImageScaleType="fitCenter"
         fresco:progressBarImage="@drawable/shape_custom_progress"
         fresco:progressBarImageScaleType="focusCrop"
-        fresco:actualImageScaleType="fitCenter"/>
+        fresco:actualImageScaleType="fitCenter"
+        fresco:fadeDuration="0"/>
 
     <!--<com.facebook.drawee.view.SimpleDraweeView-->
         <!--android:id="@+id/placeholder_image_item"-->

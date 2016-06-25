@@ -16,13 +16,13 @@ public class YImageBrowserActivity extends FragmentActivity {
 
     protected FrameLayout contentLayout;
 
-    private String[] placeholderUri;
+    private String[] placeholderUri; //用于大图还没加载出来时先放一个缩略图
     private String[] urlStrs;
     private int pos;
 
     private int[] size;
     private int[] location;
-    private String currentImageUri;
+    private String currentImageUri; //缩略图用于缩放动画的
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

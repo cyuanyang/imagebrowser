@@ -19,7 +19,7 @@ public class YImageBrowser {
         return new YImageBrowser();
     }
 
-    public void startBrowserImage(Activity activity , List<String> uriStrs  , View selectedView , int position){
+    public void startBrowserImage(Activity activity , List<String> uriStrs , List<String>holderUriStrs , View selectedView , int position){
 
         int[] size = new int[2];
         Rect r = new Rect();
@@ -33,7 +33,9 @@ public class YImageBrowser {
         i.setClass(activity, YImageBrowserActivity.class);
         String[] strings = new String[uriStrs.size()];
         uriStrs.toArray(strings);
-        i.putExtra("placeHolderUri",strings); //传小图作为占位图
+        String[] stringsHolder = new String[holderUriStrs.size()];
+        holderUriStrs.toArray(stringsHolder);
+        i.putExtra("placeHolderUri",stringsHolder); //传小图作为占位图
         i.putExtra("urls", strings);//大图地址
         i.putExtra("position", position);
         i.putExtra("currentImageUri", uriStrs.get(position));
