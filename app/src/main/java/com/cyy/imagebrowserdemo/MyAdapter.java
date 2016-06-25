@@ -48,7 +48,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         holder.layout.setItemClickListener(new AutoGridLayout.ItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                YImageBrowser.newInstance().startBrowserImage((Activity) context , uriStrs , view , position);
+                ///这里holderUri应该传入缩略图的Uri ，但是测试没有缩略图，所以传入的大图。
+                //
+                // sorry
+                YImageBrowser.newInstance().startBrowserImage((Activity) context ,uriStrs, uriStrs , view , position);
             }
         });
     }
