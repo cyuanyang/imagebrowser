@@ -14,8 +14,22 @@ image browser for android
 
 Only a code
 ```Java
- YImageBrowser.newInstance().startBrowserImage((Activity) context , uriStrs , view , position);
+ holder.layout.setItemClickListener(new AutoGridLayout.ItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                ///这里holderUri应该传入缩略图的Uri ，但是测试没有缩略图，所以传入的大图。
+                //
+                // sorry
+                YImageBrowser.newInstance().startBrowserImage((Activity) context ,uriStrs, holderUriStrs , view , position);
+            }
+        });
 ```
+
+# Support
+
+* use facebook's fresco load web image , so you should invoke Fresco.init() method.
+
+
 
 
 
