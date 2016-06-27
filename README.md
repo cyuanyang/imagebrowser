@@ -25,9 +25,11 @@ Only a code
         });
 ```
 
-# Support
+# Other
 
 * use facebook's fresco load web image , so you should invoke Fresco.init() method.
+* Thanks to fork it and help me to make it better
+* email:shawn199101@163.com
 
 
 
