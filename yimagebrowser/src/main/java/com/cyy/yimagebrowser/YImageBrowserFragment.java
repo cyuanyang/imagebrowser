@@ -55,7 +55,7 @@ public class YImageBrowserFragment extends Fragment implements
     private int[] size;
     private String currentImageUri;
 
-    private YImageBrowserDelegate delegate; /// 动画代理
+    private YImageBrowserDelegate delegate; /// 进入动画的代理动画代理
     private int isShowNaviBar; //1>show 2>hiden 3>doing
 
     @Override
@@ -159,7 +159,6 @@ public class YImageBrowserFragment extends Fragment implements
             @Override
             public void onAnimationEnd(Animator animation) {
                 animationCompleted();
-
                 if (delegate != null) delegate.animationEnd();
             }
 

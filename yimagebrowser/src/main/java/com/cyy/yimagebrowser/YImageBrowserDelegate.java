@@ -8,5 +8,4 @@ package com.cyy.yimagebrowser;
 public interface YImageBrowserDelegate {
     void animationBegin();
     void animationEnd();
-
 }
